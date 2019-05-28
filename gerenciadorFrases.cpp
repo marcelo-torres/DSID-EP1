@@ -1,4 +1,3 @@
-
 #include <string>
 #include <iostream>
 
@@ -6,28 +5,17 @@
 #include <sstream>
 
 #include <vector>
-#include <list> 
-#include <iterator> 
 
 using namespace std;
-
-#warning Apagar essa funcao antes de enviar
-void showlist(list <string> g) 
-{ 
-    list <string> :: iterator it; 
-    for(it = g.begin(); it != g.end(); ++it) 
-        cout << '\t' << *it; 
-    cout << '\n'; 
-} 
 
 class GerenciadorDeFrases {
 
 public:
 
     // Devolve uma lista de strings com os nomes de todos os autores
-    list<string> obterAutores() {
+    vector<string> obterAutores() {
     
-        list<string> listaDeNomes;
+        vector<string> listaDeNomes;
         
         ifstream arquivo(this->arquivoDeNomes);
 
@@ -56,11 +44,7 @@ public:
     string obterFraseAleatoriaDoAutor(string nomeDoAutor) {
         
         vector<string> listaDeFrases = this->listarFrasesDoAutor(nomeDoAutor);
-        
         int indiceFraseSorteada = this->sortearValor(listaDeFrases.size());
-        
-        cout << "Foi sorteado: " << indiceFraseSorteada << "\n";
-        
         string fraseSorteada = listaDeFrases.at(indiceFraseSorteada);
         
         return fraseSorteada;
@@ -73,7 +57,6 @@ private:
     string codigoDoArquivo(string nomeDoAutorProcurado) {
     
         ifstream arquivo(this->arquivoDeNomes);
-    
         string nomeDoAutor, codigoDoArquivo;
     
         if(arquivo.is_open()) {
@@ -129,13 +112,33 @@ private:
 
 int main() {
  
-    GerenciadorDeFrases g;
+    GerenciadorDeFrases g;  
+    vector<string> autores = g.obterAutores();
     
-    showlist(g.obterAutores());
+    cout << "Escolha um autor:\n";
+    for(int i = 1; i <= autores.size(); i++) {
+        cout << "\t" << i << " - " << autores.at(i - 1) << "\n";
+    }
+
     
-    string n = g.obterFraseAleatoriaDoAutor("Paulo Freire");
-    cout << n << "\n";
+    bool invalido = true;
+    int escolha = -1;
+    do {
+        cout << "Escolha o número: ";
+        cin >> escolha;
+        
+        invalido = (escolha < 0 || escolha > autores.size());
+        
+        if(invalido) {
+            cout << "[!] Valor invalido! Digite um numero entre 1 e " << autores.size() << "\n";
+        }
+        
+    } while(invalido);
     
+    string autor = autores.at(escolha - 1);
+    string frase = g.obterFraseAleatoriaDoAutor(autor);
+    
+    cout << "\nFRASE:\n" << frase << " -" << autor << "\n\n";
 
     return 0;
 }
