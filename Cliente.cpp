@@ -15,7 +15,8 @@
 
 #include <iostream>
  
-#define PORT 8080 
+//#define PORT 8080 
+#include "porta.h"
 
 using namespace std;
 
@@ -25,10 +26,11 @@ class Cliente {
     
 public:
 
+	// Faz toda a interacao com o usuario
 	void metodoInteracaoComUsuario(){
 		
 		
-		StubCliente stub;  
+	StubCliente stub;  
         vector<string> autores = stub.obterAutores(); // RPC
         
         if(autores.size() > 0) {

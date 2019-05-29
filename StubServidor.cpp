@@ -4,7 +4,7 @@
 #include "gerenciadorFrases.cpp"
 #include <vector>
  
-#define PORT 8080 
+#include "porta.h"
 
 using namespace std;
 
@@ -60,4 +60,5 @@ public:
 
 
 };
+
 

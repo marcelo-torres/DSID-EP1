@@ -58,6 +58,7 @@ private:
 
     string arquivoDeNomes = "autores.csv";
 
+    // Devolve o nome do arquivo em que estao armazenadas as frases de um autor
     string codigoDoArquivo(string nomeDoAutorProcurado) {
     
         ifstream arquivo(this->arquivoDeNomes);
@@ -83,6 +84,7 @@ private:
         return "";
     }
 
+    // Dado um no0me de um autor lista as suas frases que estao armazenadas em um arquivo csv
     vector<string> listarFrasesDoAutor(string nomeDoAutor) {
     
         string nomeDoArquivoDeFrases = this->codigoDoArquivo(nomeDoAutor);
@@ -147,6 +149,7 @@ int main() {
     return 0;
 }
 */
+
 
 
 
