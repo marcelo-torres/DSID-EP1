@@ -10,7 +10,7 @@ using namespace std;
 
 class StubServidor {
 
-    GerenciadorDeFrases gerenciador = new GerenciadorDeFrases();
+    GerenciadorDeFrases gerenciador = GerenciadorDeFrases();
 
     const vector<string> explode(const string& s, const char& c) //metodo split, copiado da net
     {
@@ -20,7 +20,7 @@ class StubServidor {
         for(auto n:s)
         {
             if(n != c) buff+=n; else
-            if(n == c && buff != "") { v.push_back(buff); buff = ""; }
+            if((n == c) && (buff != "")) { v.push_back(buff); buff = ""; }
         }
         if(buff != "") v.push_back(buff);
         
@@ -33,10 +33,10 @@ class StubServidor {
 public:
 
     //metodo que recebe a string que veio do stub do cliente e verifica qual metodo chamar
-    string reesponse(string request){ 
+    string response(string request){ 
         vector<string> vetor{explode(request, '>')};//separa metodo de parametro, na string
 
-        if(vetor[0] && vetor[0] == "obterAutores"){//metodo obter autores (não tem parametro)
+        if(vetor.size() > 0 && vetor[0] == "obterAutores"){//metodo obter autores (não tem parametro)
             
             string resp{""};
             vector<string> aux = gerenciador.obterAutores();
@@ -46,8 +46,8 @@ public:
 
             return resp;
         }
-        else if(vetor[0] = "obterFraseAleatoriaDoAutor"){
-            if(vetor[1]){
+        else if(vetor[0] == "obterFraseAleatoriaDoAutor"){
+            if(vetor.size() > 1){
                 return gerenciador.obterFraseAleatoriaDoAutor(vetor[1]);
             }
         }

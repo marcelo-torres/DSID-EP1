@@ -26,8 +26,8 @@ public:
 	void metodoInteracaoComUsuario(){
 		//...
 		// usar deste jeito
-		vector<string> stub.obterAutores(); 
-		string s(obterFraseAleatoriaDoAutor("autor..."));
+		vector<string> v{stub.obterAutores()}; 
+		for(string s:v) cout << s << endl;
 		//...
 	}
 

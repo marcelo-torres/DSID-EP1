@@ -11,7 +11,7 @@ using namespace std;
 class Escrava{
 
     Fila* f;
-        pthread_t thread;
+    pthread_t thread;
     int numero;
     
 
@@ -68,7 +68,19 @@ public:
             printf("\nthread %d pegou socket: %d\n", numero, socket);
             valread = read(socket, buffer, TAMANHO_BUFFER);
             printf("Processando.\n\n");
-            string resp{stub.response(buffer)}; //manda pro stub a mensagem e pega a resposta
+
+
+            string s = stub.response(buffer); //manda pro stub a mensagem e pega a resposta
+        
+            int n = s.length(); 
+        
+ 
+            char resp[n + 1]; 
+        
+       
+            strcpy(resp, s.c_str()); 
+            
+            
 
             send(socket, resp, strlen(resp), 0); //envia a resposta pro cliente
             printf("Hello message sent\n\n");

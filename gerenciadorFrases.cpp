@@ -113,7 +113,7 @@ private:
 };
 
 
-
+/*
 int main() {
  
     GerenciadorDeFrases g;  
@@ -146,7 +146,7 @@ int main() {
 
     return 0;
 }
-
+*/
 
 
 
