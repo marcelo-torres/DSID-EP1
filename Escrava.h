@@ -2,6 +2,7 @@
 
 #include <string>
 #include "Fila.cpp"
+#include "StubServidor.cpp"
 
 #define TAMANHO_BUFFER 1024
 
@@ -51,7 +52,7 @@ public:
         int valread;
         char buffer[TAMANHO_BUFFER] = {0};
         char str[] = "Oi do servidor na thread: ";
-
+        StubServidor stub;
         
         char novoId[strlen(str)*2];
 
@@ -67,18 +68,9 @@ public:
             printf("\nthread %d pegou socket: %d\n", numero, socket);
             valread = read(socket, buffer, TAMANHO_BUFFER);
             printf("Processando.\n\n");
-            sleep(10); //frescura minha pra falar que demora pra processar
-            
-            /*
-            
-                aqui a chamada do metodo da classe que faz demux da requisicao, passando a string da requisicao e recebendo a string da resposta
-            
-            char* resposta = response(valread);
-            send(socket, resposta, strlen(resposta), 0);
-            */
+            string resp{stub.response(buffer)}; //manda pro stub a mensagem e pega a resposta
 
-            //printf("%s\n", buffer);
-            send(socket, novoId, strlen(novoId), 0);
+            send(socket, resp, strlen(resp), 0); //envia a resposta pro cliente
             printf("Hello message sent\n\n");
         }
         

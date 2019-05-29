@@ -12,6 +12,10 @@ class GerenciadorDeFrases {
 
 public:
 
+    GerenciadorDeFrases(){
+        
+    }
+
     // Devolve uma lista de strings com os nomes de todos os autores
     vector<string> obterAutores() {
     
