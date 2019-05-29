@@ -2,6 +2,7 @@
 #include <stdlib.h> 
 #include <string.h>
 #include <string>
+#include <vector>
 #include "MiddlewareCliente.cpp"
 
 
@@ -28,9 +29,10 @@ class StubCliente {
 public:
 
     string obterFraseAleatoriaDoAutor(string nomeDoAutor){
-        char* request = strcat("obterFraseAleatoriaDoAutor>", nomeDoAutor);//monta a atring, caractere '>' separa nome do metodo do parametro
+        //string request = strcat("obterFraseAleatoriaDoAutor>", nomeDoAutor);//monta a atring, caractere '>' separa nome do metodo do parametro
+        string request = "obterFraseAleatoriaDoAutor>" + nomeDoAutor;
 
-        string response = MiddlewareCliente.response(request); //manda o middeware enviar a string e pega a resposta
+        string response = MiddlewareCliente::response(request); //manda o middeware enviar a string e pega a resposta
         
         //trata a resposta e a retorna
         if(response[0] == '-'){//casos de erros
@@ -47,8 +49,8 @@ public:
     }
 
     vector<string> obterAutores(){
-        char* request = "obterAutores>";
-        string response = MiddlewareCliente.response(request);
+        string request = "obterAutores>";
+        string response = MiddlewareCliente::response(request);
 
         //trata a resposta
         if(response[0] == '-'){//casos de erros
