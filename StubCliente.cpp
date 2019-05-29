@@ -2,6 +2,7 @@
 #include <stdlib.h> 
 #include <string.h>
 #include <string>
+#include <vector>
 #include "MiddlewareCliente.cpp"
 
 
@@ -28,10 +29,10 @@ class StubCliente {
 public:
 
     string obterFraseAleatoriaDoAutor(string nomeDoAutor){
+        //string request = strcat("obterFraseAleatoriaDoAutor>", nomeDoAutor);//monta a atring, caractere '>' separa nome do metodo do parametro
+        string request = "obterFraseAleatoriaDoAutor>" + nomeDoAutor;
 
-        string request = "obterFraseAleatoriaDoAutor>" + nomeDoAutor;//monta a atring, caractere '>' separa nome do metodo do parametro
-        MiddlewareCliente middleware;
-        string response = middleware.response(request); //manda o middeware enviar a string e pega a resposta
+        string response = MiddlewareCliente::response(request); //manda o middeware enviar a string e pega a resposta
         
         //trata a resposta e a retorna
         if(response[0] == '-'){//casos de erros
@@ -49,23 +50,39 @@ public:
 
     vector<string> obterAutores(){
         string request = "obterAutores>";
-        MiddlewareCliente middleware;
-        string response = middleware.response(request);;
+        string response = MiddlewareCliente::response(request);
 
         //trata a resposta
         if(response[0] == '-'){//casos de erros
             if(response[1] == '1'){ //-1, chegou requisicao desconhecida no servidor
-                vector<string> v{"Erro no sistema."};
-                return v; 
+                /*vector<string> v{"Erro no sistema."};
+                return v;*/
+                
+                cout << "[!] Erro no sistema. \n";
+                vector<string> v;
+                return v;
             }
             if(response[1] == '2'){ //-2, erro ao abrir arquivo no servidor
-                vector<string> v{"Erro, problemas ao procurar lista de autores no sistema."};
+                /*vector<string> v{"Erro, problemas ao procurar lista de autores no sistema."};
+                return v;*/
+                
+                cout << "[!] Erro, problemas ao procurar lista de autores no sistema. \n";
+                vector<string> v;
+                return v;
+            }
+            if(response[1] == '3'){ //-2, erro ao abrir arquivo no servidor
+                //vector<string> v{"Erro, Erro, problemas ao se conectar ao servidor"};
+                //return v;
+                
+                cout << "[!] Erro, problemas ao se conectar ao servidor. \n";
+                vector<string> v;
                 return v;
             }
             //colocar aqui os outros cassos de erro com ifs e corrigir o codigo do primeiro, caso necessário
         }
         
         else{//caso de acerto
+        
             vector<string> v{explode(response, '|')};
             return v;
         }
