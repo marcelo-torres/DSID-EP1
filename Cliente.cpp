@@ -12,6 +12,8 @@
 #include <string.h>
 #include <string>
 #include "StubCliente.cpp"
+
+#include <iostream>
  
 #define PORT 8080 
 
@@ -24,25 +26,46 @@ class Cliente {
 public:
 
 	void metodoInteracaoComUsuario(){
-		//...
-		// usar deste jeito
-		vector<string> v{stub.obterAutores()}; 
-		for(string s:v){
-			int n = s.length(); 
-            char resp[n + 1]; 
-            strcpy(resp, s.c_str()); 
-			printf("%s\n",resp);
-		} 
-		//...
+		
+		
+		StubCliente stub;  
+        vector<string> autores = stub.obterAutores(); // RPC
+        
+        if(autores.size() > 0) {
+            cout << "Escolha um autor:\n";
+            for(int i = 1; i <= autores.size(); i++) {
+                cout << "\t" << i << " - " << autores.at(i - 1) << "\n";
+            }
+            
+            bool invalido = true;
+            int escolha = -1;
+            do {
+                cout << "Escolha o número: ";
+                cin >> escolha;
+                
+                invalido = (escolha < 0 || escolha > autores.size());
+                
+                if(invalido) {
+                    cout << "[!] Valor invalido! Digite um numero entre 1 e " << autores.size() << "\n";
+                }
+                
+            } while(invalido);
+            
+            string autor = autores.at(escolha - 1);
+            string frase = stub.obterFraseAleatoriaDoAutor(autor); // RPC
+            
+            cout << "\nFRASE:\n" << frase << " -" << autor << "\n\n";
+         }
 	}
 
 
 };
 
 int main(int argc, char** argv) {
-    Cliente c;
-
-    c.metodoInteracaoComUsuario();
+    
+    Cliente cliente;
+    
+    cliente.metodoInteracaoComUsuario();
 	
     return 0;
 }
