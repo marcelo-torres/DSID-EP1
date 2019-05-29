@@ -11,6 +11,7 @@
 
 #include <string.h>
 #include <string>
+#include <vector>
  
 #define PORT 8080 
 
@@ -21,16 +22,17 @@ class MiddlewareCliente {
     
 public:
 
-    static string response(string mensagem) { 
+    static string response(string request) { 
 	    struct sockaddr_in address; 
 	    int sock = 0, valread; 
 	    struct sockaddr_in serv_addr; 
 	    
-	    const char *hello = mensagem.c_str(); 
+	    const char *hello = request.c_str(); 
+		
 	    char buffer[1024] = {0}; 
 	    if((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0) { 
                 //printf("\n Erro ao criar o socket \n"); 
-                return "-1"; 
+                return string("-1"); 
 	    } 
 
 	    memset(&serv_addr, '0', sizeof(serv_addr)); 
@@ -41,12 +43,12 @@ public:
 	    // Convert IPv4 and IPv6 addresses from text to binary form 
 	    if(inet_pton(AF_INET, "127.0.0.1", &serv_addr.sin_addr)<=0) { 
                 //printf("\n Invalid address/ Address not supported \n"); 
-                return "-2"; 
+                return string("-2"); 
 	    } 
 
 	    if(connect(sock, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0) { 
                 //printf("\n Não foi possível se conectar ao servidor!\n"); 
-                return "-3"; 
+                return string("-3"); 
 	    }
             
 	    send(sock , hello , strlen(hello) , 0 ); 
@@ -55,9 +57,10 @@ public:
 	    //printf("%s\n",buffer ); 
 
 		if(buffer[0] == '-' && buffer[1] == '1'){
-			return "-4";
+			return string("-4");
 		}
-	    return "0"; 
+		printf("fooi\n");
+	    return string(buffer); 
     }
 	
 
